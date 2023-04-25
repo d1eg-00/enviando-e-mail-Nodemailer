@@ -21,12 +21,24 @@ app.get('/sendemail', async (req, res) => {
   var message = {
     from: "sender@server.com",
     to: "receiver@sender.com",
-    subject: "Message title",
-    text: "Plaintext version of the message",
-    html: "<p>HTML version of the message</p>"
+    subject: "Meu primeiro e-mail",
+    text: "Olá, esse é meu primeiro e-mail enviado",
+    html: "<p>Aqui é uma menssagem em HTML</p>"
   };
 
-
+  transport.sendMail(message, function(err){
+    if(err)
+      return res.status(400).json({
+        erro:true,
+        mensagem: 'Erro: e-mail não enviado!'
+      })
+    else
+      return res.json({
+        erro: false,
+        mensagem: 'E-mail enviado com sucesso!' 
+      })
+  })
+  
 })
 
 app.listen(porta, () => { console.log('Servidor rodando!') })
